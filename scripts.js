@@ -18,13 +18,14 @@ document.addEventListener('DOMContentLoaded', () => {
         mensaje: ''
     }
 
-
-    comprobarFormInfo();
+    window.addEventListener('load', () => {
+        formulario.reset();
+        comprobarFormInfo();
+    });
 
     function validar(event) {
         if(event.target.value.trim() === '') {
             mostrarAlerta(`El campo ${event.target.id} no puede ir vacío`);
-            formInfo[event.target.name] = '';
             return;   
         }
 
@@ -82,12 +83,8 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }, 3000);
         
-        formInfo.nombre = '';
-        formInfo.email = '';
-        formInfo.mensaje = '';
-        
+        Object.keys(formInfo).forEach(key => formInfo[key] = '');
         formulario.reset();
-        
         comprobarFormInfo();
     };
 
@@ -99,9 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
         msjError.textContent = mensaje
         divError.appendChild(msjError)
 
-        setTimeout(() => {
-            msjError.remove()
-        }, 4000);
+        setTimeout(() => { msjError.remove() }, 4000);
     };
 
     function limpiarAlerta() {
